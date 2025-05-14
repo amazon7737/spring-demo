@@ -7,6 +7,7 @@ import org.oauth.dto.KakaoMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,9 +21,10 @@ public class KakaoEndpoint {
         this.kakaoClient = kakaoClient;
     }
 
+    @GetMapping("/callback")
     public ResponseEntity<KakaoMessage> callback(HttpServletRequest request) throws Exception {
-        KakaoDto response = kakaoClient.execute(request.getParameter("message"));
-        log.info("message: {}", request.getParameter("message"));
+        KakaoDto response = kakaoClient.execute(request.getParameter("accessToken"));
+        log.info("accessToken: {}", request.getParameter("accessToken"));
 
         return ResponseEntity.ok().body(new KakaoMessage("Success", response));
     }
