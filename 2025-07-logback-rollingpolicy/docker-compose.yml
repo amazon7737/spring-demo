@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins-with-java17-docker:latest
+    user: root
+    volumes:
+      - /Users/mini14/File/jenkins_home_backup:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker CLI 사용을 위해 필요
+    ports:
+      - "8080:8080"    # Jenkins Web UI
+      - "50000:50000"  # Jenkins 에이전트와의 통신 포트
+
+volumes:
+  jenkins_home_backup:
